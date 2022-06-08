@@ -1,15 +1,33 @@
 <template>
+  <Header></Header>
   <router-view></router-view>
 </template>
 
 <script>
 
+import Header from './components/Header.vue';
+
 export default {
-  name: 'App',
+    name: "App",
+    components: [
+      Header
+    ],
+    components: { Header }
 }
+
 </script>
 
 <style>
+  * {
+    box-sizing: border-box;
+  }
 
+  html {
+    font-family: "Roboto", sans-serif;
+  }
+
+  body {
+    margin: 0;
+  }
 </style>
 
