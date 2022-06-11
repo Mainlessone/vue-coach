@@ -17,7 +17,7 @@
       <p v-if="!description.isValid">Description must not be empty</p>
     </div>
     <div class="form-control" :class="{ invalid: !rate.isValid }">
-      <label for="rate">Hourly rate</label>
+      <label for="rate">Hourly rate</label> 
       <input type="number" id="rate" v-model.number="rate.value" @blur="clearValidity(rate)">
       <p v-if="!rate.isValid">Rate must be greater than 0</p>
     </div>
