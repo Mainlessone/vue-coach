@@ -14,7 +14,11 @@ export default {
     context.commit('registerCoach', { ...coachData, id: userId });
   },
 
-  async loadCoaches(context) {
+  async loadCoaches(context, payload) {
+    if (!payload.forceRefresh && !context.getters.shouldUpdate) {
+      return;
+    }
+    
     const url = `${DATABASE_URL}/coaches.json`;
 
     const response = await fetch(url);
@@ -34,5 +38,6 @@ export default {
     }
 
     context.commit('setCoaches', coaches);
+    context.commit('setLastFetch');
   }
 };

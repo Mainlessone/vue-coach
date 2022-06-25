@@ -1,25 +1,27 @@
 <template>
-  <base-dialog :show="!!error" :title="error" @close="closeErrorDialog">
-    <p>{{ error }}</p>
-  </base-dialog>
-  <section>
-    <CoachFilter @change-filter="setFilters"></CoachFilter>
-  </section>
-  <section>
-    <base-card>
-      <div class="controls">
-        <base-button mode="outline" @click="getCoaches">Refresh</base-button>
-        <base-button v-if="!isLoading && !isCoach" link to="/register">Register a Coach</base-button>
-      </div>
-      <div v-if="isLoading">
-        <base-spinner></base-spinner>
-      </div>
-      <ul v-else-if="!isLoading && coaches.length">
-        <CoachItem v-for="coach in coaches" :key="coach.id" v-bind="coach"></CoachItem>
-      </ul>
-      <h3 v-else>No coaches found</h3>
-    </base-card>
-  </section>
+  <div>
+    <base-dialog :show="!!error" :title="error" @close="closeErrorDialog">
+      <p>{{ error }}</p>
+    </base-dialog>
+    <section>
+      <CoachFilter @change-filter="setFilters"></CoachFilter>
+    </section>
+    <section>
+      <base-card>
+        <div class="controls">
+          <base-button mode="outline" @click="getCoaches(true)">Refresh</base-button>
+          <base-button v-if="!isLoading && !isCoach" link to="/register">Register a Coach</base-button>
+        </div>
+        <div v-if="isLoading">
+          <base-spinner></base-spinner>
+        </div>
+        <ul v-else-if="!isLoading && coaches.length">
+          <CoachItem v-for="coach in coaches" :key="coach.id" v-bind="coach"></CoachItem>
+        </ul>
+        <h3 v-else>No coaches found</h3>
+      </base-card>
+    </section>
+  </div>
 </template>
 
 <script>
@@ -77,10 +79,10 @@ export default {
       this.filters = updatedFilters;
     },
 
-    async getCoaches() {
+    async getCoaches(refresh = false) {
       this.isLoading = true;
       try {
-        await this.$store.dispatch('coaches/loadCoaches');
+        await this.$store.dispatch('coaches/loadCoaches', { forceRefresh: refresh });
       } catch(error) {
         this.error = error.message || 'Something went wrong';
       }

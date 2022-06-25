@@ -1,19 +1,21 @@
 <template>
-  <base-dialog :show="!!error" :title="error" @close="closeErrorDialog">
+  <div>
+    <base-dialog :show="!!error" :title="error" @close="closeErrorDialog">
     <p>{{ error }}</p>
-  </base-dialog>
-  <section>
-    <base-card>
-      <header>
-        <h2>Requests received</h2>
-      </header>
-      <base-spinner v-if="isLoading"></base-spinner>
-      <ul v-else-if="!isLoading && requests.length">
-        <request-item v-for="request in requests" :key="request.id" v-bind="request"></request-item>
-      </ul>
+    </base-dialog>
+    <section>
+      <base-card>
+        <header>
+          <h2>Requests received</h2>
+        </header>
+        <base-spinner v-if="isLoading"></base-spinner>
+        <ul v-else-if="!isLoading && requests.length">
+          <request-item v-for="request in requests" :key="request.id" v-bind="request"></request-item>
+        </ul>
       <h3 v-else>You haven't received requests yet</h3>
-    </base-card>
-  </section>
+     </base-card>
+    </section>
+  </div>
 </template>
 
 <script>
